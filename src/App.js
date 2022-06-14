@@ -13,8 +13,9 @@ function App() {
 
   useEffect(() => {
     filterHandler();
+    saveLocalTodos();
   }, [todos, status]);
-  //Functions
+
   const filterHandler = () => {
     switch(status) {
       case 'completed':
@@ -28,6 +29,15 @@ function App() {
         break;
     }
   }
+
+  const saveLocalTodos = () => {
+    if (localStorage.getItem("todos") === null) {
+      localStorage.setItem("todos", JSON.stringify([]));
+    } else {
+      localStorage.setItem("todos", JSON.stringify(todos));
+    }
+  }
+
   return (
     <div className="App">
       <header>
@@ -39,9 +49,9 @@ function App() {
         setTodos={setTodos}
         setInputText={setInputText}
         setStatus={setStatus}
-        filteredTodos={filteredTodos}
         />
-      <TodoList setTodos={setTodos} todos={todos} />
+      <TodoList setTodos={setTodos} todos={todos} filteredTodos={filteredTodos}
+ />
     </div>
   );
 }
